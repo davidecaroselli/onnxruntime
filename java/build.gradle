@@ -37,6 +37,16 @@ def trainingDescription = 'ONNX Runtime Training is a training and inference pac
 	'(Open Neural Network Exchange) models. This package is targeted for Learning on The Edge aka On-Device Training ' +
 	'See https://github.com/microsoft/onnxruntime-training-examples/tree/master/on_device_training for more details.'
 
+def getROCMVersion = {
+	def version = new File("/opt/rocm/.info/version").text
+	def idx = version.indexOf(".")
+	return Integer.parseInt(version.substring(0, idx))
+}
+
+if (useROCM != null) {
+	version += "-rocm" + getROCMVersion()
+}
+
 java {
 	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
